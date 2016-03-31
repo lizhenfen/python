@@ -1,0 +1,32 @@
+{% extends 'hosts/index.html' %}
+
+{% block content-panel %}
+	<!--<span style="color:red"> {{ request.path }}<span> -->
+	<div class="col-md-3">
+		主机组
+		<div class="panel panel-default">
+			<div class="panel-body">
+				
+					未分组主机[{{ request.user.host.select_related.count }} ]
+				
+			
+				{% for group in request.user.hostgroup.select_related %}
+					{{ group.name }}[{{ group.bindhosttouser_set.select_related.count }}]
+				{% endfor %}
+				
+
+		    </div>
+		</div>
+	</div>
+	<div class="col-md-9">
+		主机列表
+		<div class="panel panel-default">
+			<div class="panel-body">
+				
+		    </div>
+		</div>
+	</div>
+	
+	
+{% endblock %}
+

@@ -1,0 +1,24 @@
+settings.py:
+	DATABASES = {
+		'default': {
+			'ENGINE': 'django.db.backends.mysql',  #设置数据库引擎
+			'NAME': 'showphoto',     #数据库名称,若是sqllite3,此处为完整路径
+			'USER':'root',           #数据库用户名
+			'PASSWORD':'openstack',  #数据库密码
+			'HOST':'192.168.50.17',  #数据库地址
+			'PORT':3306,             #数据库端口
+	MEDIA_ROOT = '/define_path/'  #上传文件的目录设置
+    DEBUG=True   #是否显示详细错误信息
+	ALLOWED_HOSTS = []   #允许访问的地址
+	APPEND_SLASH=True #需要在URL地址的末尾添加/  ; False: 不需要再末尾添加/或者根据每个URL决定
+	ROOT_URLCONF： 指定根urls.py文件；顺序逐个匹配，找到即调用关联的view函数
+	DJANGO_SETTINGS_MODULE: 指定 搜索路径下的 设置文件settings
+	TEMPLATE_DIRS: 告诉Django的模板加载机制，模板的位置
+		(os.path.join(os.path.dirname(__file__), 'templates').replace('\\','/'),)
+	INSTALLED_APPS: 所有包含数据库的应用都需要放在此目录下
+	MIDDLEWARE_CLASSES： 
+	设置静态文件：
+		BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+		INSTALLED_APPS元组里面是否有‘django.contrib.staticfiles’,
+		STATIC_URL = ‘/static/’
+		STATICFILES_DIRS = (os.path.join(BASE_DIR, “static”),)

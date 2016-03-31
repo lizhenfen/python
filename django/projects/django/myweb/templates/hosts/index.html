@@ -1,0 +1,22 @@
+{% extends 'index.html' %}
+
+          {% block sidebar %}
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="{% url 'hosts:hostmgr' %}">主机挂了<span class="sr-only">(current)</span></a></li>
+            <li><a href="{% url 'hosts:mulcmd' %}">批量命令</a></li>
+            <li><a href="{% url 'hosts:upfile' %}">文件分发</a></li>
+
+          </ul>
+          {% endblock %}
+{% block content-panel %}
+	<span style="color:red"> {{ request.path }}<span>
+{% endblock %}
+		  
+{% block bottom-js %}
+ 	  
+	<script type="text/javascript">
+
+		$("#navbar-menu a[href=\'{% url 'hosts:index' %}\']").parent().addClass("active");
+			  
+	</script>		  
+{% endblock %}	

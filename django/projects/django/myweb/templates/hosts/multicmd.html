@@ -1,0 +1,55 @@
+{% extends 'hosts/index.html' %}
+
+{% block content-panel %}
+	<!--<span style="color:red"> {{ request.path }}<span> -->
+	<div class="col-md-3">
+		主机组
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<ul id="group-list" class="list-group">
+
+				未分组主机[{{ request.user.host.select_related.count }} ]
+					<ul>
+						{% for host in  request.user.host.select_related %}
+						<li> {{  host.hostname }}</li>
+						{% endfor %}
+					</ul>
+				
+				{% for group in request.user.hostgroup.select_related %}
+				<li class="list-group-item borderless">
+                <input onclick="CheckAllToggle(this)" data="host-group" type="checkbox" value="{{ h.id }}">
+                <a  data='group' class="a-pointer">
+					{{ group.name }}<span class="badge">[{{ group.bindhosttouser_set.select_related.count }}]</span>
+				</a>
+					<ul class="list-group hide">
+						{% for host in  group.bindhosttouser_set.select_related %}
+						<li class="list-group-item list-tree"><span>-- </span>> 
+							<input type="checkbox" value="{{ host.id }}">{{  host.host.hostname }}
+						</li>
+						{% endfor %}
+					</ul>
+				{% endfor %}
+				
+				</ul>
+		    </div>
+		</div>
+	</div>
+
+	</div>
+	
+
+	
+{% endblock %}
+
+{% block bottom-js %}
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#group-list a[data='group']").click(function(){
+			$(this).nextAll().toggleClass('hide');
+		})
+	})
+</script>
+
+{% endblock %}
+
+

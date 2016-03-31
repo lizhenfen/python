@@ -1,0 +1,50 @@
+models模型：
+	models.CharField(first_arg,)
+		first_arg: 人类可读的列名
+		default= : 设置默认值
+	
+	
+	创建外键时，可以指定relate_name
+	创建数据库
+	python manage.py inspectdb > model.py #查看数据库
+        指定表名：
+	    class meta:
+	        db_table = 'table_name'
+	radio_admin=True：管理页面显示为单选按钮
+        verbose_name : 显示名称
+		字段可以使用， 表也可以使用在 class Meta: 下
+	choices=((),): 选择，可以和上面结合组成单选界面
+	blank=True :空字符串，允许字段可选，即空
+	null=True来指定一个字段允许为NULL ，NULL是唯一指定空值的方法， 日期型、时间型和数字型字段不接受空字符串，需要同时使用null=True blank=True
+	verbose_name: 设置自定义字段
+	 python manage.py validate ： 检查模型的语法和逻辑是否正确
+	 python manage.py sqlall app_name: 生产sql语句
+	 python manage.py syncdb: 同步至数据库，不会将模型的修改删除同步
+	 检索：
+		sql_table.objects.all():检索出所有数据
+	        sql_table.objects.distinct().values("field_name")  #根据列名去重
+                sql_table.objects.exclude(key=value): 排除key=value的值
+		sql_table.objects.filter(key=value): 过滤出符合value的值，精确匹配
+		sql_table.objects.filter(key__[i]contains=value): 过滤出符合value的值,模糊匹配，like
+		sql_table.objects.get(key=value): 获取单个数据
+	排序：
+		sql_table.objects.order_by(key/-key[,key2]): 安装字段Key排序/前面加-表示逆向排序
+		默认排序，在模型中 class meta: ordering=["key"]  按照元数据排序
+	连锁查询：
+		sql_table.objects.filter(key__contains=value)..order_by(key/-key):
+	限制返回的数据：
+		sql_table.objects.all()[n:m]:返回数据的n到m ， 不支持负索引
+	更新所有数据：
+		p = Pulisher.objects.all()
+		p.name = 'Lizhen'
+		p.save()
+		以上操作会更新整条数据，而且更新整个列
+		sql_table.objects.filter(id=n).update(key=value) : 此项操作会更新单个键。 推荐用法； 返回受影响的数
+		sql_table.objects.filter(id=n).delete(): 删除
+	__exact: 精确匹配
+	__contains: like
+	__gt,lt,lte,in
+	__startswith,endswith
+	__range: 在..范围
+	__year,month,day
+	__isnul=True/False

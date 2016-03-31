@@ -1,0 +1,12 @@
+{% extends 'index.html' %}
+
+
+
+{% block bottom-js %}
+ 	  
+	<script type="text/javascript">
+
+		$("#navbar-menu a[href=\'{% url 'dashboard:index' %}\']").parent().addClass("active");
+			  
+	</script>		  
+{% endblock %}	
