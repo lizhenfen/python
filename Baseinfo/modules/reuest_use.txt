@@ -1,0 +1,64 @@
+安装:
+	pip install requests
+导入:
+	import requests
+
+格式：
+    proxies = {
+        "http":"http://[user:pass@]proxy_ip:proxy_port",
+        "https":"http://proxy_ip:proxy_port",
+    }
+    headers = {"User-Agent":"alexkh"}
+    r = requests.post("http://www.baidu.com/post"，allow_redirects=False，params=params,timeout=1,proxies=proxies,headers=headers)
+           allow_redirects = False   #禁止跳转
+           params=params             #传递参数
+           timeout=0.1               #设置连接超时,超过连接时间报错
+           proxies=proxies           #设置代理地址访问
+           headers=headers           #自定义请求头
+
+r = requests.get("http://www.baidu.com")  #请求网页, 其他方法POST,PUT,DELETE,HEAD,OPTIONS
+	r = requests.post("http://www.baidu.com/post")
+     
+r.status_code   #返回请求状态码
+r.header        #返回头部信息
+r.request.headers# 请求头的内容
+r.text          #返回请求的文本,会自动转换内容,unicode无缝切换
+r.content       #也可以返回请求的文本
+r.url           #获取请求url
+r.encoding      #获取网页编码, 也可以修改网页编码
+r.json()        #获取json格式的数据
+r.history       #判断是否发生了跳转
+URLs传参数：
+  params = {'wd':"python",'pn':10}
+  r = requests.get("http://www.baidu.com",params=params)
+
+requests.get(url)  #获取url的内容
+requests.post(url,data={'key':'value'})  #data 是form，明文发送
+requests.get(url,params={'key':'value'}) # http://url/?key=value
+
+r.status_code    #返回code
+r.raise_for_status  #
+
+r=requests.get('https://api.github.com/events')
+r.text    #text文本，  读取web内容，自动解码
+r.encoding  #显示当前的解码方式，r.encoding='utf-8' 设置
+
+r.content   #二进制文本
+r.json()    #json格式
+读取原始数据:
+	r = requests.get('https://api.github.com/events', stream=True) #读取原始的socket，stream设置为true
+	r.raw.read()   #读取
+	with open(filename,'wb') as fd:
+		for chunk in f.iter_content(chunk_num):
+			fd.write(chunk)
+		
+增加header
+	url='https://www.baidu.com'
+	headers = {'user-agent':'my-app/0.0.1'}
+	r = requests.get(url,headers)
+
+
+1、官方文档
+requests的具体安装过程请看：http://docs.python-requests.org/en/latest/user/install.html#install
+requests的官方指南文档：http://docs.python-requests.org/en/latest/user/quickstart.html
+requests的高级指南文档：http://docs.python-requests.org/en/latest/user/advanced.html#advanced

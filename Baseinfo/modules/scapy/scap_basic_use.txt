@@ -1,0 +1,120 @@
+python-devel
+pip install pyx==0.12.1
+pip install scapy
+#pip install plot
+pip install PyCrypto
+yum install tcpdump
+
+conf: 显示配置信息
+帮助：ls()
+	ls(IP)
+	lsc() :可使用的函数或命令
+参数：
+	timeout
+	verbose=0: 不显示
+函数：
+	RandShort() #随机生成端口
+	ans.haslayer(TCP) : 返回的结果 是否包含指定层
+	ans.getlayer(TCP): 获取指定类型
+	常用方法函数
+	hexdump(a):包的内容十六进制显示
+	str(pkt) 组装包
+	hexdump(pkt) 十六进制转储
+	ls(pkt) 字段值的列表
+	pkt.summary() 总结
+	pkt.show() 数据包
+	pkt.show2() 一样显示但组装包(例如校验和计算)
+	pkt.sprintf() 格式字符串填满包的字段值
+	summary() 显示一个列表,每个包的摘要
+	nsummary() 包的数量
+	filter() 用lambda函数返回一个过滤后的包列表
+	hexraw() 返回原始十六进制数据
+	make table() 用lambda函数返回一个表格
+	send():第三层发送数据包,自动处理物理层和数据链路层
+	sendp():第二层发送,可以选择接口和链路层协议
+	sr():发送包并接受回答
+	sr1():只返回一个被发送的包
+Ip地址：
+	target="www.baidu.com"
+	ip=IP(dst=target)
+	ip.src
+	ip.dst | ip.ttl | [p for p in ip ]
+	del(ip.ttl) #删除设置的值，恢复默认
+	ip.flags
+	proto : 指定协议
+sniffer: 
+	iface=        #网卡
+	filter="UDP"  #过滤
+	count=2       #抓取数量
+	prn=lambda x:x.summary()  #屏幕上打印结果
+TCP:
+	tcp = TCP()
+	tcp.flags 
+	dport: 目标端口
+	TCP 的flags：
+		F : FIN – 结束; 结束会话
+		S : SYN – 同步; 表示开始会话请求
+		R : RST – 复位;中断一个连接
+		P : PUSH – 推送; 数据包立即发送
+		A : ACK – 应答
+		U : URG – 紧急
+		E : ECE – 显式拥塞提醒回应
+		W : CWR – 拥塞窗口减少
+组合：
+	IP(_)  #查看默认IP设置
+	IP()/TCP()
+	IP()/TCP()/"GET /HTTP/1.0\r\n\r\n"  #数据部分可以直接为字符串
+	Ether()/IP()/TCP()
+	Ether()/IP()/UDP()
+发送数据包：
+	inter: 设置两个数据包之间等待的时间间隔
+	retry:设置重复发送次数
+	timeout: 设置在最后一个数据包发出去之后的等待时间
+	
+	send：工作在第三层
+		send(IP(dst=target)/ICMP())
+	sendp: 工作在第二层，可以选择网卡和协议
+		sendp(Ether()/IP(dst=target,ttl=(1,4)),iface='enp0s8')
+		sendp("hello,i am fuzz",iface="enp0s8",loop=1,inter=0.2)
+	fuzz函数：
+		改变不可被计算的值,更改的值是随机的,但是 类型是符合字段的值的
+		send(IP(dst=target)/UDP()/NTP(version=4),loop=2)
+		send(IP(dst=target)/fuzz(UDP()/NTP(versiont=4)),loop=2)
+	sr: 发送数据包和接收响应, 返回有响应数据包和没有响应数据包,第三层数据包(IP,ARP)
+		sr(IP(dst=target)/TCP(dport=[20,80]),inter=0.2,retry=2,timeout=1)
+		ans,unans = _
+		ans.show()
+	sr1: sr的变异，只返回应答的分组，第三层数据包(IP,ARP)
+		ans = sr1(IP(dst=target)/TCP(dport=[20,80]),inter=0.2,retry=2,timeout=1)
+		ans.show() #格式化输出
+	srp：
+	srp1:
+		ans=srp1(Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(hwdst="ff:ff:ff:ff:ff:ff"))
+		ans=srp1(Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst="192.168.27.0/24"),timeout=10)
+流量嗅探：
+	pkt=sniff(iface="eth0",count=10)
+	过滤
+		
+	pkt.show() #显示
+	wrpcap('demo.pcap',pkt)
+	read_pkts = rdpcap('demo.pcap')
+导入导出：
+	base64样式
+	export_object(str(pkt))
+	new_pkts=import_object()  #输入上述导出的字符，ctrl+d结束
+扫描：
+	arp需要设置： 
+	 完整的包：
+		opcode：置为1(请求包)
+		hardware type：置为1(以太网)
+		protocol type：置为0x0800(IP)
+	ans,unans=srp(Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst="192.168.27.0/24",op=1,ptype=0x0800,hwtype=1),timeout=10)
+	ans.summary(lambda (s,r): r.sprintf("%Ether.src% %ARP.psrc%"))
+
+实例：
+	DNS查询包: sr1(IP(dst=”DNS服务器地址”)/UDP()/DNS(rd=1,qd=DNSQR(qname=”查询域名”)))
+	SYN扫描: sr1(IP(dst=”目的IP”)/TCP(dport=目的端口,flags=”S”))
+		ICMP不可到达错误 (类型3，代码1，2，3，9，10，或者13)，该端口也被标记为被过滤。
+		接收到数据包，flags=”SA”：端口开放。
+		接收到数据包，flags=”RA”：端口未被监听。
+		没有接收到数据包：端口关闭或被防火墙禁止。
