@@ -1,0 +1,238 @@
+data = [1,2,3,4,5]
+data2 = [[1,2,3,4],[5,6,7,8]]
+
+import numpy as np
+arr = np.array(data)  #创建一维矩阵
+arr2= np.array(data2)  #创建二维矩阵
+
+np.zeros(n)  #创建一维矩阵, 填充0
+np.ones(n)   #创建一维矩阵, 填充1
+np.zeros(n1,n2) #创建n1行，n2列的矩阵
+np.empty(n1,n2,n3) #创建n3个 n1行n2列的矩阵，没有任何数据填充
+
+arr.ndim()   #显示行数
+arr.shape()   #行数，列数
+arr.dtype()  #显示数据类型
+
+
+np.arange(n)  #与range一样
+
+np.array(data,dtype=np.float64)  #创建矩阵时候，指定类型(bool,object,intn(n=8,16,32,64),float(16,32,64,128),complex)
+
+arr.astype(np.int32)  #更改矩阵类型，创建一个新的矩阵即使类型一样
+
+#等大的矩阵可以进行算术操作
+arr = np.array([1,2,3,4],[5,6,7,8])
+arr*arr 显示 array([1,4,8,16],[25,36,49,64])  
+arr+arr 显示 array([1,4,6,8],[10,12,14,16])
+arr*0.5 显示 array([0.5,1,1.5,2],[2.5,3,3.5,4])
+
+#基本的索引和分片
+arr = np.arange(10)
+arr[5] 显示 5
+arr[2:3] 显示 2
+arr[2:4]=10  显示 array(0,10,10,4,5,6,7,8,9)
+#注意 分片是原始数据的视图，修改分片会影响原始数据
+arr_slice = arr[1:3]
+arr_slice[1]=20  #arr 显示 0,20,10,4,5...
+arr_slice=20     #arr 显示 0,20,20,4,5....
+
+#复制分片
+arr_new_slice = arr[5:8].copy()
+
+#对于高维矩阵，索引不是单一的值，而是矩阵
+arr2d = np.array([1,2,3],[4,5,6])
+arr2d[0] #显示 [1,2,3]
+arr2d[0][1] #显示 2
+arr2d[0,1]  #和 arr2d[0][1]结果相同
+
+#2*2*3矩阵
+arr3d = np.array([[[1,2,3],[4,5,6]],[[7,8,9],[10,11,12]]])
+oldarr = arr3d[0].copy()
+arr3d[1,0]  #显示 [7,8,9]
+#高维的分片索引
+arr3d[:2,1:] #显示 array([4,5,6],[10,11,12])
+#解析 :2 取行的前2个，1： 取列的 1以后的列
+
+
+#生成随机数
+data = np.randome.randn(7,4)  #生成7行4列
+#bool值
+names=np.array(['Bob', 'Joe', 'Will', 'Bob', 'Will', 'Joe', 'Joe'])
+names == 'Bob'  #显示 array([True,False,False,True,False,False,False],dtype=bool)
+data[names == 'Bob']  #取 为True的行
+data[names == 'Bob'，3]  #取 为True的行，第3列的值
+data[-(names == 'Bob')]  #取非真的行
+data[(names=='Bob') | (names=='Joe'])]  #或， 与&
+data[data<0]=0   #设置所有小于0的值为0
+
+
+#花式索引
+arr = np.array(8,4)
+for i in range(8):
+  arr[i] = i
+结果
+array([[0,0,0,0],[1,1,1,1],[2,2,2,2]....) #x\选取（0,1,2)(0,1,2)()
+arr[[4,3,0,6]]  #取第4，3,0,6行
+arr[[-5,-3,-7]] #取倒数第5,3,7行
+
+#改变一维数组成多维数组
+#与切片不同，复制数组
+data = np.arange(32).reshape((8,4))
+arr[[1,5,7,2],[0,3,1,1]]  #取(1,0)(5,3)(7,1)(2,1)
+arr[1,5,7,2][:,[0,3,1,2]] #与上面的相同
+arr[np.ix_([1,5,7,2],[0,3,1,2])]  #与上面相同,把一维数组转换成选取方形区域的索引器
+
+#一维矩阵置换
+arr.T  #行和列互相转换
+#数组的乘积
+arr.dot(arr.T,arr)  #等价于XTX , arr.T * arr
+
+#多维数据的置换
+#transpose 先得到由轴编号的元组才能对这些轴进行置换
+arr = np.arange(16).reshape((2,2,4))
+arr.transpose((1,0,2))
+
+#多维矩阵置换
+arr = np.arange(16).reshape((2,2,4))
+arr.swapaxes(1,2)  #置换指定的行，不是copy,是石头
+
+#通用函数
+arr = np.arange(10)
+np.sqrt(arr)  #arr的平方根
+np.exp(arr)   #arr每个要素的指数
+
+一元函数：
+abs,fabs : 计算绝对值，非复数可以使用fabs
+sqrt     : 计算元素的平方根，arr**0.5
+square   : 计算元素的平方根，arr**2
+exp      : 计算各元素的指数 e*
+log,log10,log2,log1p : 自然对数(底数e),底数10，底数2，log(1+x)
+sign     : 计算各元素的正负号
+ceil     : 计算各元素的ceiling值，即大于等于该值得最小整数
+floor    : 计算各元素的小于等于该值得最大整数
+rint     : 各元素四舍五入到最接近的整数，保留dtype
+isnan    : 返回一个哪些值是NaN(这不是一个数字) ，布尔数组
+modf     : 将数组的小数和 整数以两个独立的数组返回
+isfinite,isinf:  分别返回哪些元素是有穷的，哪些元素师无穷的
+cos,cosh,sin,sinh : 普通和双曲型的 三角函数
+tan,tanh
+arccos,arcosh,arcsin : 反三角函数
+arcsinh,arctan,arctanh
+logicao_not : 计算各元素的not x的真值，相当于 -arr
+
+二元函数：
+add  : 数组中的对应元素相加
+subtract : 第一个数组中减去第二个数组中的元素
+multyply ： 数组元素相乘
+divide,foor_divide: 除法或向下整除（丢弃余数）
+power  : 对第一个数组中的A,根据第二个数组元素B， A的B次方
+maximum,fmax: 元素级的最大值. fmax忽略NaN
+minimum,fmin: 元素级的最小值. fmin忽略NaN
+mod    : 求摸（余数）
+copysin ：第二个数组中的符号复制给第一个数组
+greater,greater_equal ,less, less_equal,equal,not_equal : >,>=,<,<=,==,!=  返回bool数组
+logical_and,logical_or,logical_xor: 元素的真值逻辑运算, &,|,^
+
+数组表达式代替循环的做法，通常称为矢量化
+sum : 全部求和 ， 或某个轴上 求和
+mean: 算术平均数，
+std,var:  标准差 和方差
+min,max: 最大值和最小值
+argmin,argmax: 最大元素和 最小元素的  索引
+cumsum:  所有元素的累计和
+cumprod: 所有元素的累计积
+np.where(条件，arr1,arr2) : 真 执行 arr1(可以是矢量1,2,), 假为arr2
+arr.any() ： 是否含有True
+arr.all() : 是否都是True
+
+arr.mean()   #所有的平均数， np.mean(arr)，可以带参数，arr.mean(0) : 每行的   arr.mean(1) 每列的
+arr.sum()    #所有的和, np.sum(arr)    ，  arr.sum(0) : x轴的和   arr.sum(1) y轴   
+上面的函数 布尔值被强制转换成1：  (np.random.randn(100)>0).sum()
+
+#排序
+arr = np.random.randn(8)
+arr.sort() #返回源
+np.sort()  #返回副本
+
+#5% 分位数
+larger_arr = np.random.randn(1000)
+larger_arr.sort()
+larger_arr[int(0.05*len(larger_arr))]
+
+#唯一化
+unique(arr) : arr中的唯一值，并返回有序结果
+intersect1d(x,y) : x,y的公共元素，并返回有序结果
+union1d(x,y) : x,y 并集，并返回有序结果
+in1d(x,y) :  得到一个 x 是否包含y 的 布尔数组
+setdiff1d(x,y) : 集合的差，元素在x中不在y中
+setxor1d(x,y) :  集合的对称差，存在一个数组中 但不同时存在两个数组中
+np.unique(arr)
+set(arr)
+#成员资格
+arr = np.arange(10)
+np.in1d(arr,[1,2])
+返回： array([False,  True,  True, False, False, False, False, False, False, False], dtype=bool)
+
+
+保存和读取：
+arr = np.arange(10)
+np.save('arr_file',arr)  #自动增加.npy 后缀
+
+np.load('arr_file.npy')
+
+加载普通文件：
+np.loadtxt('file.csv',delimeter=',')
+np.genfromtxt()  #和loadtxt一样，面向结构化数组和缺失数据
+
+
+#线性代数 numpy.linalg
+
+diag: 以一维数组的形式返回方阵的对角线(或非对角线)元素，或将一维数组转换成方阵(非对角线为0)
+dot : 矩阵乘法
+trace: 对角线元素的和
+det: 计算对角线元素的和
+eig: 计算方阵的 本征值 和 本征向量
+inv:  计算方阵的逆
+pinv: 计算矩阵的Moore_Penrose伪逆
+qr:   计算QR分解
+svd:  计算奇异值分解
+solve: 解线性方程组Ax=b, 其中A 为方阵
+lstsq: 计算Ax=b 的最小二乘解
+
+
+#随机数生成
+seed : 确定随机数生成器的种子
+permutation: 返回一个序列的随机排列 和返回一个随机排列的范围
+shuffle: 对一个序列就地随机排列
+rand: 产生均匀分布的样本值
+randint: 从给定的上下限范围内随机选取整数
+randn: 产生正态分布的样本(平均值为0，标准差为1)的样本
+normal: 产值正态(高斯)分布的样本值
+beta: 产生beta分布的样本值
+chisquare: 产生卡方分布的样本值
+gamma: 产生gamma分布的样本
+uniform: 产生在[0,1]均匀分布的样本值 
+
+标准正态分布： np.random.normal(size=(4,4))
+
+范例：
+ 随机漫步：
+  一：
+    import random
+    position = 0
+    walk = [position]
+    steps = 10000
+    for i in xrange(steps):
+      step = 1 if random.randint(0,1) else -1
+      position += step
+      walk.append(position)
+  二;
+    nsteps = 1000
+    draws = np.random.randint(0,2,size=nsteps)
+    steps = np.where(draws>0,1,-1)
+    walk  = np.cumsum()
+
+
+
+
