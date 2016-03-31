@@ -1,0 +1,25 @@
+参考网址：http://pythonhosted.org/setuptools/setuptools.html
+安装 setuptools:
+基本使用：
+  文件名： setup.py
+	from setuptools import setup,find_packages
+	setup(
+		name='define_name',
+		version='0.1',
+		packages=find_packages(),
+		scripts=['python.py'],
+		install_requires = ['docutils>=0.3'],
+		package_data = {
+		    '':['*.txt','*.rst'],
+			'hello':['*.msg'],
+		},
+		#metadata for upload  to PyPI
+		author='me',
+		author_email = 'me@example.com',
+		description='this is a example Package',
+		license = 'PSF',
+		keywords = 'hello word',
+		url = 'http://project_home_url.com'
+		)
+	生成文件：
+		python setup.py sdist

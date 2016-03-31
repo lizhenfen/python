@@ -1,0 +1,23 @@
+在日常开发和生产部署中，经常会用到PyPi的仓库，但是由于国内网络原因，经常出现丢包、超时等情况。可以在生产服务器上定期同步一个。
+
+[root@linuxhot ~]# pip install bandersnatch
+[root@linuxhot ~]# mkdir /opt/python/pypi
+[root@linuxhot ~]# vim /etc/bandersnatch.conf
+master = https://pypi.python.org #Pypi源
+workers = 10 #根据服务器情况，可以开多个线程。
+directory = /opt/python/pypi  #设置仓库存放目录
+
+开始同步镜像
+[root@linuxhot ~]#bandersnatch mirror
+[root@unixhot ~]# ln -s /opt/python/pypi/web/ /var/www/html/pypi
+
+使用自定义的Pypi源
+方法一：
+在用户家目录下
+mkdir $HOME/.pip
+vi $HOME/.pip/pip.conf
+输入下面内容
+[global]
+index-url = http://www.unixhot.com/pypi/simple
+方法二：
+Pip install xxx –I http://www.unixhot.com/pypi/simple

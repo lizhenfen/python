@@ -1,0 +1,2 @@
+导出当前安装的模块:
+	pip freeze > requirements.txt

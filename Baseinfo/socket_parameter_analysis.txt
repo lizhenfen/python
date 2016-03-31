@@ -1,0 +1,123 @@
+地址： (host,port)   #<broadcast>: 表示广播地址(INADDR_BROADCAST)
+
+socket.AF_NETLINK : 表示pid,groups
+socket.AF_TIPC: linux使用此地址，集群非ip的网络协议
+错误类型：
+	socket.error:  socket-related  errors , (errno,string)os.error
+	socket.herror: address-related erros,
+		gethostbyname_ex(),gethostbyaddr()
+	socket.gaierror: address-related errors
+		getaddrinfo(),getnameinfo()
+	socket.timeout(): 当settimeout(),超时会抛出此错误
+
+setblocking(): 设置非阻塞模式
+settimeout(): 超时时间设置
+
+scoket(arg1,arg2):
+	arg1: 地址簇
+		socket.AF_UNIX, socket.AF_INET, socket.AF_INET6
+	arg2: 协议
+		socket.SOCK_STREAM, socket.DGRAM, socket.SOCK_RAW, socket.RDM, scoket.SOCK_SEQPACKET
+setsockopt() ,getsockopt(): 参数
+	SO_*
+	socket.SOMAXCONN
+	MSG_*
+	SOL_*
+	IPPROTO_*
+	IPPORT_*
+	INADDR_*
+	IP_*
+	IPV6_*
+	EAI_*
+	AI_*
+	NI_*
+	TCP_*
+ioctl():参数	
+	SIO_*
+	RCVALL_*
+tipc参数
+	TIPC_*
+socket.has_ipv6 : 查看系统是否支持ipv6
+socket.getdefaulttimeout(): 查看默认系统超时时间
+socket.setdefaulttimeout(timeout): 设置系统超时时间
+socket.create_connection(address[,timeout[,sourceaddress])
+	socket.connect()的更高级函数
+	address可以是ipv4,ipv6,hostname;
+	若设置超时时间,则使用，否则使用getdefaulttimeout()
+	sourceaddress: 格式(host,port)
+socket.gethostname(): 返回本节主机名,不总是返回FQDN
+socket.getfdn(name): 返回FQDN; 若空,返回本机
+socket.gethostbyname(hostname): 转换hostname 到 ipv4地址
+socket.getnameinfo(sockaddr,flags): 转换socket地址到(host,port)
+scoket.getprotobyname(protocolname): 转换internet协议名,作为socket的第三个参数,当使用SOCK_RAW协议
+socket.gethostbyaddr(ip): 
+	返回格式： hostname, aliaslist, ipaddrlist)
+socket.gethostbyname_ex(hostname): 转换hostname 到 ipv4地址,扩展地址
+	返回格式： hostname, aliaslist, ipaddrlist)
+
+socket.getaddrinfo(host,port[,family[,socktype[,proto[,flags]]]])
+	转换host/port 参数成 创建socket连接的包含5个值得元组
+	host: domain,ipv4,ipv6,None
+	port: service name(http),port number, None
+	flags: AI_*
+	返回的格式：(family, socktype, proto, canonname, sockaddr)
+	
+socket.getservbyname(servicename[,protocolname]): 转换service name 成 port number
+socket.getservbyport(port[,protocolname]): 转换port number和 protocolname 成 servicename
+socket.socket([family[,type[,proto]]]): 创建socket对象
+	type: SOCK_*
+socket.socketpair([family[,type[,proto]]])： 创建一堆socket对象
+socket.fromfd(fd,family,type[,proto]): 
+	fd: fileno 方法返回的int
+socket.ntoh1(x): 转换32位网络字节 到 主机字节
+socket.ntohs(x): 转换16位网络字节 到 主机字节
+socket.htonl(x): 转换32位主机字节 到 网络字节
+socket.htons(x): 转换16位主机字节 到 网络字节
+socket.inet_aton(ip_string): 转换ip地址 成16进制的二进制格式
+socket.inet_ntoa(packed_ip): 与上面的功能相反
+socket.inet_pton(address_family, ip_string) ：与上面的功能相同，可以指定ipv6
+socket.inet_ntop(address_family, packed_ip)
+
+
+socket object方法：
+	scoket.accept(): 
+		返回(conn,addr) : conn是一个返回的新的对象, 用了接收和发送数据
+	socket.bind(address):
+		绑定socket到地址,不能是已经绑定的
+	socket.close(): 关闭
+	socket.connect(address): 连接到远端的socket
+	socket.connect_ex(address): 与上面的功能相同, 当发生错误时 返回错误提示而不是raise 
+	socket.fileno(): 返回socket的文件描述符, 有用select.select()
+	socket.getpeername(): 当socket连接时，返回远端的地址
+	socket.getsockname(): 返回socket自己的地址
+	socket.getsockopt(level,optname[,buflen]):
+	socket.ioctl(control,option): 
+		只适用windows
+		是一个限制的接口
+	socket.listen(backlog): 监听socket
+		backlog: 最小 0 ； 最大 5
+	socket.makefile([mode[,bufsize]): 返回一个文件对象和socket
+	socket.recv(bufsize[,flags]): 从socket接收数据
+	socket.recvfrom(bufsize[,flags]): 
+		返回 ： (nbytes,address)
+	socket.send(string[,flags])
+	socket.sendall(string[,flags])
+	socket.sendto(string, address)
+	socket.setblocking(flag):
+		若 flag 为0 ,表示非阻塞
+	socket.settimeout(value)：
+		设置 阻塞的超时时间
+	socket.gettimeout()：
+		获取超时时间的设置
+	socket.setsockopt(level, optname, value)：
+	socket.shutdown(how)：
+		关闭一个或2个连接的一半
+		how: 
+			SHUT_RD: further receives are disallowed
+			SHUT_WR: further sends are disallowed.
+			SHUT_RDWR: 发送和接收 都被禁用
+	只读属性：
+		socket.family
+		socket.type
+		socket.proto
+		

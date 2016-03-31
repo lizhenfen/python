@@ -1,0 +1,8 @@
+http://www.restran.net/2015/10/04/supervisord-tutorial/
+supervisor:
+	supervisord:守护进程
+	supervisorctl: 管理工具，start ,stop  restart
+	创建配置文件：	
+		echo_supervisord_conf > /etc/supervisord.conf
+		sudo su - root -c "echo_supervisord_conf > /etc/supervisord.conf"
+		

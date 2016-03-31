@@ -1,0 +1,60 @@
+判断文件是否存在：
+  os.path.exists('file_name')  #目录，文件，绝对路径或相对路径
+判断是否是文件：
+  os.path.isfile('file_name')
+判断是否是目录：
+  os.path.isdir('dir_name')
+判断一个路径是否是绝对路径(不必真实存在)：
+  os.path.isabs('path')
+复制文件：
+  import shutil
+  shutil.copy('source_file','des_file')
+移动文件：
+  import shutil
+  shutil.move('source_file','des_file')
+重命名：
+  os.rename('old_name','new_name')
+软硬链接：
+  os.link('file_name','hard_link')
+  os.symlink('file_name','soft_link')
+  判断是否是link:
+    os.path.islink('file_name')
+权限设置：
+  os.chmod('file_name',0o400)
+  使用状态属性：
+    import stat
+	os.chmod('file_name',stat.S_IRUSR)
+改变属主,属组：
+  uid=gid=500
+  os.chown('file_name',uid,gid)
+返回绝对路径：
+   os.path.abspath('file_name')
+获取软链接的真实路径：
+  os.path.realpath('symlink_name')
+删除文件：
+  os.remove('file_name')
+创建文件夹：
+  os.mkdir('dir_name')
+删除文件夹：
+  os.rmdir('dir_name')
+列出文件夹内容：
+  os.listdir('dir_name')
+改变当前工作目录：
+  os.chdir('dir_path')
+搜索匹配文件夹：
+  使用通配符
+  import glob
+  glob.glob('m*')
+  
+程序：
+  os.getpid()  #获取当前进程pid
+  os.getcwd()  #获取当前进程的工作目录
+  os.getuid()
+  os.getgid()
+  运行：
+   import subprocess
+   ret = subprocess.getoutput('date')  #返回字符串，返回标准输出和错误输出
+   subprocess.check_output(['date','-u'])  #返回bytes，不是字符串， 只返回标准输出
+   subprocess.getstatusoutput('date')  #返回元组，状态和 输出
+   subprocess.call('date')  #打印输出，不返回结果
+   

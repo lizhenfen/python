@@ -1,0 +1,84 @@
+urllib2模块：
+	urllib2.urlopen(url[,data,timeout[,cafile[,capath[,cadefault[,context]]]]])
+		url: 可以是一个字符串或者request object
+		data: 可以是一个指定的额外的发送到服务器的字符串，此值非none时，request需要是POST，格式：urllib.urlencode
+		timeout: 超时时间，如果未指定，全局超时时间生效
+		context: 此值被指定，必须是ssl.SSLContext
+		cadefault: 被忽略
+		返回一个类文件对象和三个额外的方法：
+			geturl(): 返回收到资源的url，通常用来检测是否被重定向
+			info(): 返回页的meta-information
+			getcode(): 返回response的 代码： 200
+	exception urllib2.URLError，此错误是IOError的子类
+		reason: 错误的原因
+	exception urllib2.HTTPError： URLError的子类
+		code: BaseHTTPServer.BaseHTTPRequestHandler.responses
+		reason: 错误的原因
+			
+	urllib2.build_opener([handler, ...])
+		返回一个OpenerDirector，handler或者是BaseHandler或者是子类
+		这些类在handlers:
+			ProxyHandler (if proxy settings are detected), UnknownHandler, HTTPHandler,HTTPSHandler, HTTPDefaultErrorHandler, HTTPRedirectHandler, FTPHandler, FileHandler, HTTPErrorProcessor
+		handler_order属性可以修改
+	urllib2.install_opener(opener)
+		Install an OpenerDirector instance as the default global opener
+		如果想urlopen 使用opener调用此方法，否则使用OpenerDirector.open()代替urlopen()
+	urllib2.Request(url[,data][,header][,origin_req_host][,unverifiable]):
+		此类是一个URL请求的子类
+		header是一个字典，可以被增加 add_header(),"Mozilla/5.0 (X11; U; Linux i686) Gecko/20071127 Firefox/2.0.0.11"
+		add_data(data): 除了http, 其他都忽略，一般一字节，改变请求为POST
+		has_data(): 只针对http, 返回get 或 post
+		add_header(key,value)
+		add_unredirected_header(key, header): 此请求不被重定向
+		has_header(header)： 返回请求是否有 命名的头
+		get_full_url(): 返回完整的请求
+		get_type()： 返回请求的url的类型
+		get_host(): 返回连接的主机
+		get_selector: 返回发送到server的部分
+		get_header(): 返回header的值，如果没有返回默认
+		header_items(): 返回header的元组列表
+		set_proxy(host,type): 设置连接到代理服务器
+		get_origin_req_host(): 
+		is_unverifiable(): 请求是否可以被识别
+	urllib2.ProxyHandler([proxy])
+		需要是字典，
+	OpenerDirector():
+		add_handler(handler): 
+	HttpCookieProcessor():
+		cookiejar: 
+		
+实例：
+	基本认证：
+	  1.
+		import urllib2
+		auth_handler = urllib2.HTTPBasicAuthHandler()
+		auth_handler.add_password(realm="PDQ Application",
+								 uri = "https://mahler:8092/site-updates.py",
+								 user="lizhen",
+								 passwd="dsd")
+		opener = urllib2.build_opener(auth_handler)
+		urllib2.install_opener(opner)
+		urllib2.urlopen("http://eds.com")
+	  1.1
+		# 创建密码管理器
+		password_mgr = urllib2.HTTPPasswordMgrWithDefaultRealm()
+		# 添加用户名和密码.
+		# 如果知道realm,用它代替None.
+		top_level_url = "http://www.163.com/"
+		password_mgr.add_password(None, top_level_url, username, password)
+		handler = urllib2.HTTPBasicAuthHandler(password_mgr)
+		#创建opener
+		opener = urllib2.build_opener(handler)
+		# 打开一个url
+		opener.open(a_url)
+
+		# 安装opener，以后urllib2.urlopen都会用它。
+		urllib2.install_opener(opener) 
+	2. 代理
+		proxy_handler = urllib2.ProxyHandler({'http': 'http://www.example.com:3128/'})
+		proxy_auth_handler = urllib2.ProxyBasicAuthHandler()
+		proxy_auth_handler.add_password('realm', 'host', 'username', 'password')
+
+		opener = urllib2.build_opener(proxy_handler, proxy_auth_handler)
+		# This time, rather than install the OpenerDirector, we use it directly:
+		opener.open('http://www.example.com/login.html')	

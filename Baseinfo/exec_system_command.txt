@@ -1,0 +1,26 @@
+http://www.xuyukun.com/python%e4%b8%ad%e6%89%a7%e8%a1%8c%e5%91%bd%e4%bb%a4%e7%9a%843%e7%a7%8d%e6%96%b9%e6%b3%95%e5%b0%8f%e7%bb%93/
+第一种：
+	执行命令, 没有返回值
+	import os
+	os.system('ls -l')
+第二种(强烈推荐)：
+	执行命令, 阻塞方式
+	运行cmd时产生的内容非常多，函数非常容易阻塞住。解决办法是不使用wait()方法，但是也不能获得执行的返回值了。
+	from subprocess import Popen,PIPE
+	Popen原型是：
+
+	subprocess.Popen(args, bufsize=0, executable=None, stdin=None, 
+				 stdout=None, stderr=None, preexec_fn=None, 
+				 close_fds=False, shell=False, cwd=None, env=None, 
+				 universal_newlines=False, startupinfo=None, creationflags=0)
+	args: 设置所要运行的程序
+	bufsize: 指定缓冲
+	executable: 指定可执行程序
+	shell: 为True时,executable指定执行shell
+	stdin, stdout, stderr分别表示程序的标准输入、输出、错误句柄。
+						他们可以是PIPE，文件描述符或文件对象，也可以设置为None，表示从父进程继承
+	
+第三种：
+	执行命令, 非阻塞方式
+	import commands
+	status,output= commands.getstatussoutput('command')

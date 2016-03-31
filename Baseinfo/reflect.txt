@@ -1,0 +1,19 @@
+#!/usr/bin/env python
+#! -*-coding:utf-8 -*-
+
+class MyClass(object):
+    def sayhi(self):
+        print "Hello, we meet too"
+    def pf(self):
+        print "I am pf"
+
+m = MyClass()
+
+user_input = raw_input("input need to execute: ")
+
+test = hasattr(m,user_input)  #判断是否存在函数
+if test:
+    func = getattr(m,user_input)  #获取函数
+    func()
+else:
+    print "Not have the func"
