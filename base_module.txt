@@ -1,0 +1,23 @@
+math: 数学工具
+	math.pi: pi的数值
+	math.sqrt(num):求num的二次方根，例：math.sqrt(81) 结果：9
+random: 随机数生产工具
+	random.random():生产随机小数。 例：random.random() 结果：0.24566513691383085
+	random.choice():从序列中随机取出某个值。 例：random.choice('lizhen')
+re: 正则表达式
+	math: 返回找到匹配的对象。 例： s=re.match("hello[ \t]*(.*)World",'hello python World') 
+	s.goup():显示单个组结果。  例： s.goup()  结果： python 
+	s.goups():显示所有的组结果
+copy: 
+	copy: 拷贝顶层的对象
+	deepcopy:深层拷贝对象
+datetime模块：
+	常量:
+		datetime.MINYEAR : 固定值1
+		datetime.MAXYEAR ：固定值9999
+	类和函数:
+		datetime.datetime.now():获取当前系统时间
+		datetime.timedelta(hours=offset)： 时间差，括号中的内容必须为整数
+glob: 通配查找文件
+	glob.glob("/data/github_upload/*/*/*.txt")
+
