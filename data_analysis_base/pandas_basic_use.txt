@@ -23,7 +23,7 @@
 	文件输入:
 		csv文件:
 			#导入中文, 指定编码方式
-			pd.read_csv(file_path,sep=',',encoding="UTF-8")
+			pd.read_csv(file_path,sep=',',encoding="UTF-8",names='columns_names')
 		文本文件：
 			# names：指定列名
 			pd.read_table(file_path,names=[],sep='\t')
