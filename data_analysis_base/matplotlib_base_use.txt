@@ -1,0 +1,50 @@
+	#显示中文标签
+	font ={
+		'family':'SimHei'   #需要字体库支持
+	}
+	matplotlib.rc('font',**font)
+#--------------导入需要的包------------------------------------
+	import matplotlib.pyplot as plt
+
+#-----------------散点图---------------------------------------	
+	
+	格式:
+		plt.plot(x,y,'.',color=(r,g,b))
+		plt.plot.xlabel('x标签名')
+		plt.plot.ylabel('y标签名')
+		plt.plot.grid(True)   #是否使用表格
+	说明:
+		x: x轴数据
+		y: y轴数据
+		.,o: 使用小点还是 大点
+		r,g,b: 取值范围:0-1, 或16进制颜色
+#-----------------------------------------------------------------
+#-------------------折线图---------------------------------------	
+#时间序列
+	格式:
+		plt.plot(x,y,style,color,linewidth)
+		title('图的标题')
+	说明:
+		style： 折线样式
+		linewidth: 折线宽度
+#-------------------折线图-------------------------------------
+	格式：
+		pie(x,labels,colors,explode,autopct)
+	说明:
+		x：绘图的序列
+		labels: 标签
+		colors: 颜色
+		explode: 突出的块序列
+		autopct: 饼图战比的显示格式，%.2f 保留2位
+#-------------------折线图-------------------------------------
+	格式：	
+		bar(left,right,width,color)
+		plt.xticks()  #设置name
+		------
+		barch(bottom,width,height,color)
+		plt.yticks()  #设置name
+	说明：
+		left: x轴,一般采用arange行数
+		right: y轴序列
+		width: 柱形图的宽度
+		color: 填充颜色
