@@ -1,0 +1,20 @@
+操作：
+	setsockopt(level,name,value)   #设置选项
+	getsockopt(level,name[,buflen])# 获取选项
+
+level: 指定用于那层，以SOL_开头
+	SOL_HCI     SOL_IP      SOL_SOCKET  SOL_TCP     SOL_TIPC    SOL_UDP
+
+name:
+	IP_ADD_MEMBERSHIP          IP_MULTICAST_TTL
+	IP_DEFAULT_MULTICAST_LOOP  IP_OPTIONS
+	IP_DEFAULT_MULTICAST_TTL   IP_RECVOPTS
+	IP_DROP_MEMBERSHIP         IP_RECVRETOPTS
+	IP_HDRINCL                 IP_RETOPTS
+	IP_MAX_MEMBERSHIPS         IP_TOS
+	IP_MULTICAST_IF            IP_TTL
+	IP_MULTICAST_LOOP 
+实例：
+	s = socket.socket(socket.AF_INET,socket.SOCK_STRAM)
+	s.setsockopt(SOL_IP,IP_TTL,128)  #设置TTL
+	s.connect(('www.baidu.com',80))
