@@ -275,6 +275,7 @@
 	    数据分组
 	2. 分组统计
   交叉(透视表):
+        pd.crosstabl(df.column1(X),df.column2(Y),margins=True)  #交叉表
 	pivot_table(values,index,columns,aggfunc,fill_value)
 	values: 数据透视表中的值(用于进行分析的列)
 	index：数据透视表中的行（透视表表的行索引得值）
