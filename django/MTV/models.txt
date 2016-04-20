@@ -48,3 +48,8 @@ models模型：
 	__range: 在..范围
 	__year,month,day
 	__isnul=True/False
+
+#自定义ManyToMany中间表
+   通过指定 through=(class table) 手动定义中间的连接表，一般用于扩展
+   实例：
+	m_field = models.ManyToMany('host',through='中间表')
