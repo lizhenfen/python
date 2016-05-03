@@ -1,0 +1,42 @@
+css脚本的位置和语法：
+    位置：
+        1. 标签内   style="属性:值"
+        2. 引入外部文件
+            <link rel="stylesheet" href="css_url">
+        3. 脚本
+            <style>.. </style>
+css文件中引用值得定义：
+    . : 引用由 class 定义的文档
+    # ： 引用由 id 定义的文档
+    标签名： 
+    _,_: 同级多个
+    - -: 级联的方式
+    标签名[属性=""]: 属性选择器，选择属性='' 的值
+样式的定义：
+    height: 显示高度
+        相对： 50%
+        绝对： 1px
+    width:  显示宽度
+        相对： 50%
+        绝对： 1px
+    border: 边框
+    solid : 实线
+    margin: 外边距(-top,-left,-right,-bottom)
+    padding: 内边距
+    display: 默认显示
+        none：隐藏 
+        block: 块级别显示
+        inline: 内联标签
+    cursor: 鼠标的样式
+    float:  内联方式(left,right)
+    position: 位置 
+        relative: 相对
+        absolute: 绝对
+        fixed   : 自适应
+    backend:
+        backend-color: 背景颜色
+        font-size: 字体大小
+        backend-image: url('/path/image')背景图片
+        backend-repeat:  背景图片填充样式(no-repeat; repeat-x; repeat-y)
+        backend-position: 背景图片位置
+        

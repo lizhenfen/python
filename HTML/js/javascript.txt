@@ -1,0 +1,61 @@
+js脚本的位置和语法：
+    位置：
+        1. 位于 <head></head>之间,通常用于引用文件
+        2. 位于 </body>, 通常用于脚本
+    语法：
+        1. 引用文件
+            <script src="/path/javascript.js"></script>
+        2. 脚本
+            <script type="text/javascript">...</script>
+注释：
+    1. 单行注释  //
+    2. 多行注释  /*  */
+变量：
+    1. 局部变量
+        var name="value"
+    2. 全局变量
+        name="value"
+函数：
+    1.命名函数
+        function funcname([arg1,]){
+            //主体
+            return val
+        }
+    2. 匿名函数
+        var temp=function(){}
+    3. 自执行函数
+        (function(){})()
+
+字符串：
+    obj.trim() //去除两边空白
+    obj.substring(start,end)  //查找子串
+    obj.length  //长度
+    obj.indexOf(char)   //char字符的位置
+数组:
+    var array=Array() 或 var array=[]   //定义数组
+    array.push(val)  //追加
+    array.unshift(val)   //前面开始加
+    array.splice(index,0,'val')  //index位置 插入
+    --删
+     array.pop()   
+     array.shift() 
+     array.splice(index,val)
+    --截取
+     array.slice(start,end)
+    --反转
+     array.reverse()
+    --合并
+     array.concat(newarray)
+    --格式化
+     array.join('-')
+    --长度
+     array.length
+事件：
+	obclick  //点击
+    --搜索框
+    onblur   //失去焦点
+    obnfocus // 获取焦点
+    setInterval("obj",time)  //设置循环
+    clearInterval(obj)       //清除循环
+    setTimeout()             //设置超时
+    clearTimeout(obj)        //清除超时

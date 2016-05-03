@@ -1,0 +1,64 @@
+注释： <!--  -->
+样式柜：
+    <fieldset>
+        <legend></legend>  <!--样式柜标题-->
+    <fieldset>
+opacity: 透明度(0-1)
+
+列表：
+    有序：
+        <ul> 
+            <li></li>
+        </ul>
+    无序：
+        <ol>    
+            <li> </li>
+        </ol>
+    其他：
+        <dl>
+            <dt></dt>
+            <dd></dd>
+        </dl>
+表格：
+    <tr >   <!-- 行 -->
+        <td>    <!-- 列 -->
+            <th> </th>   <!-- 列头 -->
+        </td>
+    </tr>
+    合并表格行：
+        <tr rowspan="n">     #当前的行占用 n 行
+    合并表格列：
+        <tr colspan="n">     #当前的列占用 n 列
+自引用：
+    <a href="#id"> <a>  #定向到id=id的位置
+    <div id="id">
+    </div>
+选择列表：
+    1. 单选择
+        <select>
+            <option value="1"> show </option>
+            <option value="2" selected="selected"> show </option>   <!--设置为默认  -->
+        </select>
+    2. 多选择
+        <select multiple="multiple" size="n">    <!-size:显示个数  -->
+        </select>
+    3. 多级选择
+        <select>
+            <optgroup label="显示名"></optgroup>
+            <option value="2" selected="selected"> show </option>   <!--设置为默认  -->
+        </select>
+输入框： 
+    <input type="text" />       <!--默认, 文本框  -->
+    <input type="password" />  <!--密码  -->
+    <input type="checkbox" /> <!-- 多选框  -->
+    <input type="radio" />   <!--单选按钮， name相同,则互斥  -->
+    <input type="button"  value="显示" />  <!--按钮  -->
+    <input type="submit" value="显示" />  <!--提交按钮  -->
+    <input type="file" />   <!--选择文件  -->
+    <textarea> </textarea>  <!-- 多行文本  -->
+标签引用：
+    <label for="name">name: <input id="name" type="text"> </label>
+特殊标签：
+    &lt: 小于
+    &gt: 大于
+    &nbsp: 空格

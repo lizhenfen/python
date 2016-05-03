@@ -1,0 +1,22 @@
+获取文档：
+    document.getElementById("#id")
+    document.getElementByName("name")
+    document.getElementByTagName("tagname")
+增加文档
+    var l = document.createElement("name")
+    增加文档到别的文档下：
+        fater.appendchild(l)
+    修改样式：
+        l.className()
+    设置属性：
+        setAttribute(k,v)
+        getAttribute()
+    样式的属性：
+        l.style.属性 
+    提交表单：
+        document.getElementById('form_id').submit()
+    转换类型：
+        parseInt('str')  //str 转换成int
+    其他：
+        innerHTML()  //获取html字符串
+        innerText()  //获取内容
